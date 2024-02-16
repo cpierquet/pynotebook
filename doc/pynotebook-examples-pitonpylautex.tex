@@ -1,0 +1,239 @@
+% !TeX TXS-program:compile = txs:///arara
+% arara: lualatex: {shell: yes, synctex: yes, interaction: batchmode}
+% arara: lualatex: {shell: yes, synctex: yes, interaction: batchmode} if found('log', '(undefined references|Please rerun|Rerun to get)')
+
+\documentclass[a4paper,11pt]{article}
+\def\PLver{0.1.0}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{pynotebook}
+\usepackage[executable=python]{pyluatex}
+\usepackage{codehigh}
+
+\begin{document}
+
+\part*{pynotebook (\PLver), with piton and pyluatex}
+
+\section{Preamble}
+
+\begin{codehigh}
+\documentclass{article}
+\usepackage{pynotebook}
+\usepackage[executable=python]{pyluatex}  % with a specific compilation !!
+\end{codehigh}
+
+\section{Examples of text blocks}
+
+\begin{codehigh}
+\begin{NotebookPitonMarkdown}{\linewidth}
+{\Large\bfseries This is a test for a \textsf{Markdown} block.}
+
+It's possible to use \LaTeX{} formulas, like %
+\[
+  \left\lbrace\begin{array}{l}
+    F_0 = 0\\
+    F_1 = 1 \\
+    F_{n+2} = F_{n+1} + F_n
+  \end{array}\right.
+\]
+\end{NotebookPitonMarkdown}
+
+\begin{NotebookPitonRaw}{\linewidth}
+This is a sample block, with RAW output.
+
+Just to use all capacities of Jupyter notebook ;-)
+\end{NotebookPitonRaw}
+\end{codehigh}
+
+\begin{NotebookPitonMarkdown}{\linewidth}
+{\Large\bfseries This is a test for a \textsf{Markdown} block.}
+
+It's possible to use \LaTeX{} formulas, like %
+\[
+\left\lbrace\begin{array}{l}
+F_0 = 0\\
+F_1 = 1 \\
+F_{n+2} = F_{n+1} + F_n
+\end{array}\right.
+\]
+\end{NotebookPitonMarkdown}
+
+\begin{NotebookPitonRaw}{\linewidth}
+This is a sample block, with RAW output.
+
+Just to use all capacities of Jupyter notebook ;-)
+\end{NotebookPitonRaw}
+
+\section{Examples of code blocks (with execution of code !)}
+
+\begin{codehigh}
+\begin{NotebookPitonIn}{0.75\linewidth}
+def fibonacci_of(n) :
+  if n in {0,1} :
+    return n
+  return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+[fibonacci_of(n) for n in range(15)]
+\end{NotebookPitonIn}
+\end{codehigh}
+
+\begin{NotebookPitonIn}{0.75\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+[fibonacci_of(n) for n in range(15)]
+\end{NotebookPitonIn}
+
+\begin{codehigh}
+\begin{NotebookPitonOut}{0.75\linewidth}
+def fibonacci_of(n) :
+  if n in {0,1} :
+    return n
+  return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(15)])
+\end{NotebookPitonOut}
+\end{codehigh}
+
+\begin{NotebookPitonOut}{\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(15)])
+\end{NotebookPitonOut}
+
+\begin{codehigh}
+\SetJupyterLng{fr}
+\SetJupyterParSkip{\baselineskip}
+\setcounter{JupyterIn}{11}
+\end{codehigh}
+
+\SetJupyterLng{fr}
+\SetJupyterParSkip{\baselineskip}
+\setcounter{JupyterIn}{14}
+
+\begin{codehigh}
+\begin{NotebookPitonIn}[center]{0.75\linewidth}
+def fibonacci_of(n) :
+  if n in {0,1} :
+    return n
+  return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+[fibonacci_of(n) for n in range(15)]
+\end{NotebookPitonIn}
+\end{codehigh}
+
+\begin{NotebookPitonIn}[center]{0.75\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+[fibonacci_of(n) for n in range(15)]
+\end{NotebookPitonIn}
+
+\begin{codehigh}
+\begin{NotebookPitonOut}[center]{0.75\linewidth}
+def fibonacci_of(n) :
+  if n in {0,1} :
+    return n
+  return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(15)])
+\end{NotebookPitonOut}
+\end{codehigh}
+
+\begin{NotebookPitonOut}[center]{0.75\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(15)])
+\end{NotebookPitonOut}
+
+\begin{codehigh}
+\begin{NotebookPitonConsole}[center]{0.75\linewidth}
+def fibonacci_of(n) :
+  if n in {0,1} :
+    return n
+  return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(15)])
+\end{NotebookPitonConsole}
+\end{codehigh}
+
+\begin{NotebookPitonConsole}[center]{0.75\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(15)])
+\end{NotebookPitonConsole}
+
+\pagebreak
+
+\section{Global example}
+
+\SetJupyterParSkip{default}
+\setcounter{JupyterIn}{0}
+
+\begin{NotebookPitonMarkdown}{\linewidth}
+{\Large\bfseries This is a test for a \textsf{Markdown} block.}
+
+It's possible to use \LaTeX{} formulas, like %
+\[
+\left\lbrace\begin{array}{l}
+F_0 = 0\\
+F_1 = 1 \\
+F_{n+2} = F_{n+1} + F_n
+\end{array}\right.
+\]
+\end{NotebookPitonMarkdown}
+
+\begin{NotebookPitonRaw}{\linewidth}
+This is a sample block, with RAW output.
+
+Just to use all capacities of Jupyter notebook ;-)
+\end{NotebookPitonRaw}
+
+\begin{NotebookPitonIn}{\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+[fibonacci_of(n) for n in range(15)]
+\end{NotebookPitonIn}
+
+\begin{NotebookPitonOut}{\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(15)])
+\end{NotebookPitonOut}
+
+\begin{NotebookPitonRaw}{\linewidth}
+Let’s compute Fibonacci terms from 10th to 20th :-)
+\end{NotebookPitonRaw}
+
+\begin{NotebookPitonIn}{\linewidth}
+[fibonacci_of(n) for n in range(10,21)]
+\end{NotebookPitonIn}
+
+\begin{NotebookPitonConsole}{\linewidth}
+def fibonacci_of(n) :
+	if n in {0,1} :
+		return n
+	return fibonacci_of(n-1) + fibonacci_of(n-2)
+
+print([fibonacci_of(n) for n in range(10,21)])
+\end{NotebookPitonConsole}
+
+\end{document}
