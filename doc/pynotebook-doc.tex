@@ -33,8 +33,8 @@
 \usepackage[margin=2cm]{geometry}
 \setlength{\parindent}{0pt}
 
-\def\TPversion{0.1.0}
-\def\TPdate{15/02/2024}
+\def\TPversion{0.1.3}
+\def\TPdate{30/03/2024}
 
 \sethlcolor{lightgray!25}
 \NewDocumentCommand\ShowCode{ m }{%
@@ -90,6 +90,10 @@
 
 \vfill~
 
+\textit{\footnotesize Thanks to F. Pantigny for his package \textsf{piton} and his help.}\dotfill{\footnotesize\ttfamily\url{https://ctan.org/pkg/piton}}
+
+\textit{\footnotesize And thanks to Tobias Enderle for his package \textsf{pyluatex}.}\dotfill{\footnotesize\ttfamily\url{https://ctan.org/pkg/pyluatex}}
+
 \pagebreak
 
 \section{Samples, with listings}
@@ -114,18 +118,65 @@ Just to use all capacities of Jupyter notebook ;-)
 \end{NotebookRaw}
 
 \begin{NotebookIn}{\linewidth}
-def fibonacci_of(n) :
-	if n in {0,1} :
-		return n
-	return fibonacci_of(n-1) + fibonacci_of(n-2)
-	
-[fibonacci_of(n) for n in range(15)]
+def fibonacci_aux(n,a,b):
+	if n == 0 :
+		return a
+	elif n == 1 :
+		return b
+	else:
+		return fibonacci_aux(n-1,b,a+b)
+
+def fibonacci_of(n):
+	return fibonacci_aux(n,0,1)
+
+print([fibonacci_of(n) for n in range(10)])
 \end{NotebookIn}
 
 \begin{NotebookOut}{\linewidth}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookOut}
 
+\begin{NotebookRaw}{\linewidth}
+Now we’re going to work with lists.
+
+Just a little example with a prime numbers, in french.
+\end{NotebookRaw}
+
+\begin{NotebookIn}{\linewidth}
+def proc_exec() :
+	choix = "o"
+	while choix == "o" :
+		n = -1
+		while n <= 1 :
+			n = int(input("Saisir un entier n, supérieur à 2 : "))
+		if estpremier(n) == True :
+			print(f"{n} est premier.")
+		else :
+			print(f"{n} n'est pas premier.")
+		listeres = listenombrepremiers(n)
+		print(f"La liste des entiers premiers <= à {n} est {listeres}.")
+		print(f"Il y a donc {len(listeres)} entiers premiers <= à {n}.")
+		choix = input("Recommencer [o/n] ? ")
+\end{NotebookIn}
+
+\begin{NotebookIn}{\linewidth}
+proc_exec()
+\end{NotebookIn}
+
+\begin{NotebookConsole}{\linewidth}
+Saisir un entier n, supérieur à 2 : 14
+14 n'est pas premier.
+La liste des entiers premiers <= à 14 est [2, 3, 5, 7, 11, 13].
+Il y a donc 6 entiers premiers <= à 14.
+Recommencer [o/n] ? o
+Saisir un entier n, supérieur à 2 : 1
+Saisir un entier n, supérieur à 2 : -3
+Saisir un entier n, supérieur à 2 : 25
+25 n'est pas premier.
+La liste des entiers premiers <= à 25 est [2, 3, 5, 7, 11, 13, 17, 19, 23].
+Il y a donc 9 entiers premiers <= à 25.
+Recommencer [o/n] ? n
+\end{NotebookConsole}
 %\vspace*{5mm}
 %
 %\begin{center}
@@ -134,9 +185,15 @@ def fibonacci_of(n) :
 %
 %\includegraphics[clip]{pynotebook-samples-pitonpyluatex.pdf}
 
-\vfill~
+\pagebreak
 
 \section{History}
+
+\verb|v0.1.3|~:~~~~Modification with \texttt{gobble} (for \textsf{piton})
+
+\verb|v0.1.2|~:~~~~Enhancements with \texttt{gobble} (for \textsf{piton})
+
+\verb|v0.1.1|~:~~~~New block \textsf{In/Out} with \textsf{piton/pyluatex} (tks to F. Pantigny)
 
 \verb|v0.1.0|~:~~~~Initial version
 
@@ -148,7 +205,7 @@ def fibonacci_of(n) :
 
 \subsection{Ideas}
 
-The idea is to provides environments to reproduce a Jupyter notebook :
+The idea is to provide environments to reproduce a Jupyter notebook :
 
 \begin{itemize}
 	\item with \textit{blocks} for \textsf{RAW} or \textsf{Markdown} ;
@@ -307,73 +364,100 @@ The blocks with \textit{header} (\texttt{In/Out}) are automatically numbered, an
 
 \begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
 \begin{NotebookIn}{\linewidth}
-def fibonacci_of(n) :
-  if n in {0,1} :
-    return n
-  return fibonacci_of(n-1) + fibonacci_of(n-2)
+def fibonacci_aux(n,a,b):
+  if n == 0 :
+    return a
+  elif n == 1 :
+    return b
+  else:
+    return fibonacci_aux(n-1,b,a+b)
 
-[fibonacci_of(n) for n in range(15)]
+def fibonacci_of(n):
+  return fibonacci_aux(n,0,1)
+
+[fibonacci_of(n) for n in range(10)]
 \end{NotebookIn}
 
 \begin{NotebookOut}{\linewidth}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookOut}
 
 \begin{NotebookConsole}{\linewidth}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookConsole}
 \end{codehigh}
 
-\begin{NotebookIn}{\linewidth}
-def fibonacci_of(n) :
-	if n in {0,1} :
-		return n
-	return fibonacci_of(n-1) + fibonacci_of(n-2)
+\pagebreak
 
-[fibonacci_of(n) for n in range(15)]
+\begin{NotebookIn}{\linewidth}
+def fibonacci_aux(n,a,b):
+	if n == 0 :
+		return a
+	elif n == 1 :
+		return b
+	else:
+		return fibonacci_aux(n-1,b,a+b)
+
+def fibonacci_of(n):
+	return fibonacci_aux(n,0,1)
+
+[fibonacci_of(n) for n in range(10)]
 \end{NotebookIn}
 
 \begin{NotebookOut}{\linewidth}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookOut}
 
 \begin{NotebookConsole}{\linewidth}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookConsole}
 
 \begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
 \begin{NotebookIn}*[flush right]{13cm}
-def fibonacci_of(n) :
-  if n in {0,1} :
-    return n
-  return fibonacci_of(n-1) + fibonacci_of(n-2)
+def fibonacci_aux(n,a,b):
+  if n == 0 :
+    return a
+  elif n == 1 :
+    return b
+  else:
+    return fibonacci_aux(n-1,b,a+b)
 
+def fibonacci_of(n):
+  return fibonacci_aux(n,0,1)
+
+[fibonacci_of(n) for n in range(10)]
 \end{NotebookIn}
 
 \begin{NotebookOut}*[flush right]{13cm}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookOut}
 
 \begin{NotebookConsole}[flush right]{13cm}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookConsole}
 \end{codehigh}
 
 \begin{NotebookIn}*[flush right]{13cm}
-def fibonacci_of(n) :
-	if n in {0,1} :
-		return n
-	return fibonacci_of(n-1) + fibonacci_of(n-2)
+def fibonacci_aux(n,a,b):
+	if n == 0 :
+		return a
+	elif n == 1 :
+		return b
+	else:
+		return fibonacci_aux(n-1,b,a+b)
 
-[fibonacci_of(n) for n in range(15)]
+def fibonacci_of(n):
+	return fibonacci_aux(n,0,1)
+
+[fibonacci_of(n) for n in range(10)]
 \end{NotebookIn}
 
 \begin{NotebookOut}*[flush right]{13cm}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookOut}
 
 \begin{NotebookConsole}[flush right]{13cm}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookConsole}
 
 \pagebreak
@@ -389,23 +473,42 @@ The package provides environments :
 \begin{itemize}
 	\item with \texttt{In~[...]} ;
 	\item with \texttt{Out[...]} ;
+	\item with \texttt{In[...]\&{}Out[...]} ;
 	\item without \textit{header}, eg for a \textit{console execution}.
 \end{itemize}
 
 \begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
-\begin{NotebookPitonIn}(*)[options tcbox]{<width>}
+\begin{NotebookPitonRaw}[options tcbox]{width}<gobble options>
+<code>
+\end{NotebookPitonRaw}
+\end{codehigh}
+
+\begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
+\begin{NotebookPitonMarkdown}[options tcbox]{width}
+<code>
+\end{NotebookPitonMarkdown}
+\end{codehigh}
+
+\begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
+\begin{NotebookPitonIn}(*)[options tcbox]{width}<gobble options>
 <code>
 \end{NotebookPitonIn}
 \end{codehigh}
 
 \begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
-\begin{NotebookPitonOut}(*)[options tcbox]{<width>}
+\begin{NotebookPitonOut}(*)[options tcbox]{width}<gobble options>
 <code>
 \end{NotebookPitonOut}
 \end{codehigh}
 
 \begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
-\begin{NotebookPitonConsole}[options tcbox]{<width>}
+\begin{NotebookPitonInOut}(*)[options tcbox]{width}<gobble options>
+<code>
+\end{NotebookPitonInOut}
+\end{codehigh}
+
+\begin{codehigh}[language=latex/latex2,style/main=cyan!10,style/code=cyan!10]
+\begin{NotebookPitonConsole}[options tcbox]{width}<gobble options>
 <code>
 \end{NotebookPitonConsole}
 \end{codehigh}
@@ -413,6 +516,18 @@ The package provides environments :
 The starred versions removes the counter, and don't display it.
 
 The blocks with \textit{header} (\texttt{In/Out}) are automatically numbered, and the global style is fixed.
+
+\smallskip
+
+\texttt{gobble options} are given within \textsf{piton} syntax :
+
+\begin{itemize}
+	\item \texttt{auto-gobble} ;
+	\item \texttt{env-gobble} ;
+	\item \texttt{gobble=xx} ;
+	\item \texttt{tabs-auto-gobble} ;
+	\item a mix of them.
+\end{itemize}
 
 \subsection{Examples}
 
@@ -424,9 +539,9 @@ Due to the necessary usage of \hologo{LuaLaTeX} and \textsf{--shell-escape}, exa
 
 \subsection{Ideas}
 
-The package provides to macro, in order to :
+The package provides macros, in order to :
 
-\begin{itemize}
+\begin{itemize}[itemsep=2pt]
 	\item configure the \textit{words} \texttt{In/Out} in \textsf{french} ;
 	\item configure the spacing before and after the boxes (\ShowCode{0.33\textbackslash baselineskip} by default).
 \end{itemize}
@@ -447,16 +562,22 @@ The package provides to macro, in order to :
 \setcounter{JupyterIn}{14}
 
 \begin{NotebookIn}{0.75\linewidth}
-def fibonacci_of(n) :
-  if n in {0,1} :
-    return n
-  return fibonacci_of(n-1) + fibonacci_of(n-2)
+def fibonacci_aux(n,a,b):
+  if n == 0 :
+    return a
+  elif n == 1 :
+    return b
+  else:
+    return fibonacci_aux(n-1,b,a+b)
+
+def fibonacci_of(n):
+  return fibonacci_aux(n,0,1)
 
 [fibonacci_of(n) for n in range(15)]
 \end{NotebookIn}
 
 \begin{NotebookOut}{0.75\linewidth}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookOut}
 \end{codehigh}
 
@@ -464,19 +585,23 @@ def fibonacci_of(n) :
 \SetJupyterParSkip{\baselineskip}
 \setcounter{JupyterIn}{14}
 
-\hrulefill
-
 \begin{NotebookIn}{0.75\linewidth}
-def fibonacci_of(n) :
-	if n in {0,1} :
-		return n
-	return fibonacci_of(n-1) + fibonacci_of(n-2)
+def fibonacci_aux(n,a,b):
+	if n == 0 :
+		return a
+	elif n == 1 :
+		return b
+	else:
+		return fibonacci_aux(n-1,b,a+b)
 
-[fibonacci_of(n) for n in range(15)]
+def fibonacci_of(n):
+	return fibonacci_aux(n,0,1)
+
+[fibonacci_of(n) for n in range(10)]
 \end{NotebookIn}
 
 \begin{NotebookOut}{0.75\linewidth}
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{NotebookOut}
 
 \end{document}
